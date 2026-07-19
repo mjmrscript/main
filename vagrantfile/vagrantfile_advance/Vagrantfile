@@ -1,0 +1,51 @@
+#When machines are interdependent (the database server must come up first, then the web server).
+ENV['VAGRANT_NO_PARALLEL'] = 'yes'
+
+Vagrant.configure(2) do |config|
+  #config.vm.provision "shell", path: "script.sh"
+
+
+#how many machine
+  NodeType1 = 1
+  (1..NodeType1).each do |type1_id|
+#name of machine "type11,type12,..."
+    config.vm.define "type1#{type1_id}" do |type1_vm|
+#my vbox name
+#we can see that with "vagrant box list"
+      type1_vm.vm.box = "bento/ubuntu-22.04"
+#choose a hostname "type11,type12,..."
+      type1_vm.vm.hostname = "type1#{type1_id}"
+#choose a ip
+      type1_vm.vm.network "private_network", ip: "192.168.56.11#{type1_id}"
+#setting hardware
+      type1_vm.vm.provider "virtualbox" do |v|
+#choose a name in list vagrant
+        v.name = "type1#{type1_id}
+#choose memory for this machine"
+        v.memory = 1024
+#choose cpu core
+        v.cpus = 1
+      end
+      # type1_vm.vm.provision "shell", path: "script_type1.sh"
+    end
+  end
+
+
+
+#how many machine
+  NodeType2 = 0
+  (1..NodeType2).each do |type2_id|
+    config.vm.define "type2#{type2_id}" do |type2_vm|
+      type2_vm.vm.box = "bento/ubuntu-22.04"
+      type2_vm.vm.hostname = "type2#{type2_id}.example.com"
+      type2_vm.vm.network "private_network", ip: "192.168.56.12#{type2_id}"
+      type2_vm.vm.provider "virtualbox" do |v|
+        v.name = "type2#{type2_id}"
+        v.memory = 1024
+        v.cpus = 1
+      end
+      # type2_vm.vm.provision "shell", path: "script_type2.sh"
+    end
+  end
+end
+
