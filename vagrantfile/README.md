@@ -13,7 +13,6 @@ sudo apt-get update
 sudo apt-get install vagrant
 sudo apt-get install packer
 ```
-
 # Add public box in vagrant
 ### Using Public Boxes
 ### Adding a bento box to Vagrant
@@ -21,32 +20,32 @@ sudo apt-get install packer
 vagrant box add --provider virtualbox bento/ubuntu-22.04
 vagrant box add --provider virtualbox bento/debian-12
 ```
-#Some code for vagrant
-###Turns on and prepares (boots) the virtual machine.
+# Some code for vagrant
+### Turns on and prepares (boots) the virtual machine.
 ```bash
 vagrant up
 ```
-###You log into the virtual machine (SSH connection)
+### You log into the virtual machine (SSH connection)
 ```bash
 vagrant ssh
 ```
-###Turns off the machine (like Shutdown)
+### Turns off the machine (like Shutdown)
 ```bash
 vagrant halt
 ```
-###It completely deletes the car (cannot be returned)
+### It completely deletes the car (cannot be returned)
 ```bash
 vagrant destroy
 ```
-###Restarts the machine (applies new settings such as network or port forwarding)
+### Restarts the machine (applies new settings such as network or port forwarding)
 ```bash
 vagrant reload
 ```
-###Shows the status of all Vagrant machines in the entire system (not just the current project)
+### Shows the status of all Vagrant machines in the entire system (not just the current project)
 ```bash
 vagrant --global status
 ```
-###Shows the list of downloaded boxes (ready operating systems)
+### Shows the list of downloaded boxes (ready operating systems)
 ```bash
 vagrant box list
 ```
