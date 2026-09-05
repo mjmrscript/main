@@ -2490,8 +2490,6 @@ export EDITOR=vim
 
 # 📦 Additional Resources
 
-- [**ShellCheck**](https://www.shellcheck.net/) — Static analysis tool for shell scripts.
-- [**Bash Reference Manual**](https://www.gnu.org/software/bash/manual/) — Official Bash documentation.
-- [**Bash Hackers Wiki**](https://wiki.bash-hackers.org/) — Bash knowledge and examples.
+- [**ShellCheck**](https://www.shellcheck.net/) — Check Shell Script.
 - [**ExplainShell**](https://explainshell.com/) — Helps explain shell commands.
 
