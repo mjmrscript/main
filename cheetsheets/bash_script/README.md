@@ -1,10 +1,6 @@
-# 🚀 Bash Scripting Cheat Sheet
+#Bash Scripting Cheat Sheet
 
 A practical and example-driven reference guide for **Bash scripting**.
-
-This cheat sheet covers Bash syntax, variables, parameters, strings, arrays, conditions, loops, functions, I/O, redirections, debugging, and useful scripting patterns.
-
-> 💡 **Tip:** Try every example yourself. Bash is much easier to learn by writing and executing small scripts.
 
 ---
 
@@ -103,13 +99,6 @@ Use `chmod +x script.sh` to make a script executable.
 chmod +x script.sh
 ```
 
-### Example
-
-```bash
-chmod +x backup.sh
-./backup.sh
-```
-
 ---
 
 ## Run a Script
@@ -146,19 +135,10 @@ or:
 
 ```bash
 . script.sh
-
-`config.sh`:
-```bash
-```
-
-```
-### Output
-
-Ali
 ```
 ---
 
-
+# Variables
 
 Create a variable using:
 ```bash
@@ -169,8 +149,9 @@ name="Ali"
 ❌ Wrong:
 ```bash
 name = "Ali"
-
-
+```
+### Example
+	
 name="Ali"
 
 ---
@@ -183,7 +164,7 @@ echo "$name"
 ### Output
 ```text
 Ali
-
+```
 ---
 
 ## Explicit Variable Expansion
