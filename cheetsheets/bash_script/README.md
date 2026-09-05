@@ -1,6 +1,10 @@
 # 🚀 Bash Scripting Cheat Sheet
 
-A comprehensive, professional reference guide for Bash scripting.
+A practical and example-driven reference guide for **Bash scripting**.
+
+This cheat sheet covers Bash syntax, variables, parameters, strings, arrays, conditions, loops, functions, I/O, redirections, debugging, and useful scripting patterns.
+
+> 💡 **Tip:** Try every example yourself. Bash is much easier to learn by writing and executing small scripts.
 
 ---
 
@@ -34,499 +38,1700 @@ A comprehensive, professional reference guide for Bash scripting.
 
 ---
 
-## Script Basics
+# Script Basics
+
+## Shebang
+
+The **shebang** specifies which interpreter should execute the script.
 
 ```bash
 #!/bin/bash
 ```
-> Shebang - tells the system which interpreter to use
+
+### Example
+
+```bash
+#!/bin/bash
+
+echo "Hello Bash!"
+```
+
+### Output
+
+```text
+Hello Bash!
+```
+
+---
+
+## Portable Shebang
+
+Use `#!/usr/bin/env bash` to find Bash using the user's `PATH`.
 
 ```bash
 #!/usr/bin/env bash
 ```
-> Portable shebang - uses environment's Bash
+
+> Useful when Bash may be installed in different locations.
+
+---
+
+## Comment
+
+Use `#` to write comments.
 
 ```bash
-# comment
+# This is a comment
 ```
-> Single line comment
+
+> Comments are ignored by Bash.
+
+### Example
+
+```bash
+# Print username
+echo "$USER"
+```
+
+---
+
+## Make Script Executable
+
+Use `chmod +x script.sh` to make a script executable.
 
 ```bash
 chmod +x script.sh
 ```
-> Make script executable
+
+### Example
+
+```bash
+chmod +x backup.sh
+./backup.sh
+```
+
+---
+
+## Run a Script
+
+Run an executable script with:
 
 ```bash
 ./script.sh
 ```
-> Run script
+
+> The script needs executable permission.
+
+### Alternative
+
+Run the script explicitly with Bash:
+
+```bash
+bash script.sh
+```
+
+> This does not require executable permission.
+
+---
+
+## Source a Script
+
+Use `source script.sh` or `. script.sh`.
 
 ```bash
 source script.sh
 ```
-> Run in current shell
+
+or:
 
 ```bash
 . script.sh
+
+`config.sh`:
+```bash
 ```
-> Same as source
+
+```
+### Output
+
+Ali
+```
+---
+
+
+
+Create a variable using:
+```bash
+name="Ali"
+```
+> No spaces around `=`.
+
+❌ Wrong:
+```bash
+name = "Ali"
+
+
+name="Ali"
 
 ---
 
-## Variables
+## Use a Variable
+```bash
+echo "$name"
+```
+
+### Output
+```text
+Ali
+
+---
+
+## Explicit Variable Expansion
+
+Use `"${name}"` when adding text directly after a variable.
+
+echo "${name}"
+```
+
+### Example
 
 ```bash
-var="value"
+name="Ali"
+
+echo "${name}_admin"
 ```
-> Assign variable (no spaces!)
+
+### Output
+
+```text
+Ali_admin
+```
+
+Without braces:
 
 ```bash
-$var
+echo "$name_admin"
 ```
-> Use variable
+
+Bash looks for a variable called `name_admin`.
+
+---
+
+## Readonly Variable
+
+Use `readonly` to prevent a variable from being modified.
 
 ```bash
-${var}
+readonly version="1.0"
 ```
-> Use variable (explicit)
+
+### Example
 
 ```bash
-readonly var
+readonly version="1.0"
+version="2.0"
 ```
-> Make read-only
+
+### Result
+
+```text
+bash: version: readonly variable
+```
+
+---
+
+## Unset Variable
+
+Use `unset name` to remove a variable.
 
 ```bash
-unset var
+unset name
 ```
-> Delete variable
+
+### Example
 
 ```bash
-export var
+name="Ali"
+unset name
+
+echo "$name"
 ```
-> Export to environment
+
+### Output
+
+```text
+```
+
+---
+
+## Export Variable
+
+Use `export` to make a variable available to child processes.
+
+```bash
+export APP_ENV="production"
+```
+
+### Example
+
+```bash
+export APP_ENV="production"
+bash -c 'echo "$APP_ENV"'
+```
+
+### Output
+
+```text
+production
+```
+
+---
+
+## Environment Variables
+
+Use `env` to display environment variables.
 
 ```bash
 env
 ```
-> List environment vars
+
+Useful examples:
+
+```bash
+echo "$HOME"
+echo "$USER"
+echo "$PATH"
+```
 
 ---
 
-## Special Variables
+# Special Variables
+
+Bash provides special variables for script arguments, process information, and exit statuses.
 
 | Variable | Description |
-|----------|-------------|
-| `$0` | Script name |
+| --- | --- |
+| `$0` | Script or shell name |
 | `$1` - `$9` | Positional parameters |
-| `${10}` | 10th+ parameter |
-| `$#` | Number of arguments |
-| `$@` | All arguments (separate) |
-| `$*` | All arguments (single) |
-| `$?` | Last exit status |
-| `$$` | Current PID |
-| `$!` | Last background PID |
+| `${10}` | 10th and later parameters |
+| `$#` | Number of positional parameters |
+| `$@` | All positional parameters |
+| `$*` | All positional parameters as one word when quoted |
+| `$?` | Exit status of the last command |
+| `$$` | PID of the current shell |
+| `$!` | PID of the most recent background process |
 
 ---
 
-## Quoting
+## `$0` — Script Name
+
+Use `$0` to access the script name.
+
+```bash
+echo "$0"
+```
+
+Run:
+
+```bash
+./script.sh
+```
+
+Possible output:
+
+```text
+./script.sh
+```
+
+---
+
+## `$1`, `$2` — Arguments
+
+`$1`, `$2`, etc. represent positional arguments.
+
+Script:
+
+```bash
+echo "Name: $1"
+echo "Age: $2"
+```
+
+Run:
+
+```bash
+./script.sh Ali 25
+```
+
+Output:
+
+```text
+Name: Ali
+Age: 25
+```
+
+---
+
+## `${10}` — 10th Argument
+
+For arguments beyond `$9`, use braces.
+
+```bash
+echo "${10}"
+```
+
+---
+
+## `$#` — Number of Arguments
+
+Use `$#` to get the number of positional parameters.
+
+```bash
+echo "Arguments: $#"
+```
+
+Run:
+
+```bash
+./script.sh one two three
+```
+
+Output:
+
+```text
+Arguments: 3
+```
+
+---
+
+## `$@` — All Arguments
+
+Use `"$@"` to iterate over arguments while preserving them individually.
+
+```bash
+for arg in "$@"; do
+    echo "$arg"
+done
+```
+
+Run:
+
+```bash
+./script.sh "hello world" linux bash
+```
+
+Output:
+
+```text
+hello world
+linux
+bash
+```
+
+> `"$@"` preserves each argument as a separate word. This is usually the safest way to iterate over arguments.
+
+---
+
+## `$*` — All Arguments
+
+Use `"$*"` to expand all arguments into one word.
+
+```bash
+echo "$*"
+```
+
+Run:
+
+```bash
+./script.sh Linux Bash Python
+```
+
+Output:
+
+```text
+Linux Bash Python
+```
+
+> When quoted, `"$*"` expands all arguments into a single word, unlike `"$@"`.
+
+---
+
+## `$?` — Exit Status
+
+Use `$?` to check the exit status of the last command.
+
+```bash
+ls /tmp
+echo "$?"
+```
+
+If successful:
+
+```text
+0
+```
+
+> `0` normally means success; a non-zero value indicates failure.
+
+---
+
+## `$$` — Current PID
+
+Use `$$` to get the PID of the current shell.
+
+```bash
+echo "PID: $$"
+```
+
+Example output:
+
+```text
+PID: 12345
+```
+
+---
+
+## `$!` — Last Background PID
+
+Use `$!` to get the PID of the most recent background process.
+
+```bash
+sleep 10 &
+echo "Background PID: $!"
+```
+
+Example output:
+
+```text
+Background PID: 12346
+```
+
+---
+
+# Quoting
+
+Quoting is extremely important in Bash because it controls variable expansion, word splitting, and special-character interpretation.
+
+---
+
+## Double Quotes
+
+Use `"..."` when you want variables and command substitutions to be expanded while preserving most whitespace.
 
 ```bash
 "$var"
 ```
-> Double quotes (expands vars)
+
+### Example
+
+```bash
+name="Ali"
+echo "Hello $name"
+```
+
+Output:
+
+```text
+Hello Ali
+```
+
+---
+
+## Single Quotes
+
+Use `'...'` when everything should be treated literally.
 
 ```bash
 '$var'
 ```
-> Single quotes (literal)
+
+### Example
+
+```bash
+name="Ali"
+echo 'Hello $name'
+```
+
+Output:
+
+```text
+Hello $name
+```
+
+---
+
+## Escape Character
+
+Use `\` to escape a special character.
 
 ```bash
 \$
 ```
-> Escape special char
+
+### Example
 
 ```bash
-`cmd`
+echo "\$HOME"
 ```
-> Command substitution (old)
 
-```bash
-$(cmd)
-```
-> Command substitution
+Output:
 
-```bash
-$((expr))
+```text
+$HOME
 ```
-> Arithmetic expansion
 
 ---
 
-## String Operations
+## Command Substitution
+
+Old syntax:
+
+```bash
+`command`
+```
+
+Preferred syntax:
+
+```bash
+$(command)
+```
+
+### Example
+
+```bash
+today=$(date)
+echo "$today"
+```
+
+> `$(...)` is preferred because it is easier to read and nest.
+
+---
+
+## Arithmetic Expansion
+
+Use `$((...))` for arithmetic expansion.
+
+```bash
+$((expression))
+```
+
+### Example
+
+```bash
+a=10
+b=5
+
+echo $((a + b))
+```
+
+Output:
+
+```text
+15
+```
+
+---
+
+# String Operations
+
+## String Length
+
+Use `${#var}` to get the length of a string.
 
 ```bash
 ${#var}
 ```
-> String length
+
+### Example
 
 ```bash
-${var:0:5}
+name="Bash"
+
+echo "${#name}"
 ```
-> Substring (pos 0, len 5)
+
+Output:
+
+```text
+4
+```
+
+---
+
+## Substring
+
+Use `${var:position:length}` to extract part of a string.
+
+```bash
+${var:position:length}
+```
+
+### Example
+
+```bash
+text="Hello World"
+
+echo "${text:0:5}"
+```
+
+Output:
+
+```text
+Hello
+```
+
+---
+
+## Remove Prefix — Shortest Match
+
+Use `${var#pattern}` to remove the shortest matching prefix.
 
 ```bash
 ${var#pattern}
 ```
-> Remove prefix (shortest)
+
+### Example
+
+```bash
+file="backup.tar.gz"
+
+echo "${file#*.}"
+```
+
+Output:
+
+```text
+tar.gz
+```
+
+---
+
+## Remove Prefix — Longest Match
+
+Use `${var##pattern}` to remove the longest matching prefix.
 
 ```bash
 ${var##pattern}
 ```
-> Remove prefix (longest)
+
+### Example
+
+```bash
+file="backup.tar.gz"
+
+echo "${file##*.}"
+```
+
+Output:
+
+```text
+gz
+```
+
+> `#` removes the shortest matching prefix.  
+> `##` removes the longest matching prefix.
+
+---
+
+## Remove Suffix — Shortest Match
+
+Use `${var%pattern}` to remove the shortest matching suffix.
 
 ```bash
 ${var%pattern}
 ```
-> Remove suffix (shortest)
+
+### Example
+
+```bash
+file="backup.tar.gz"
+
+echo "${file%.*}"
+```
+
+Output:
+
+```text
+backup.tar
+```
+
+---
+
+## Remove Suffix — Longest Match
+
+Use `${var%%pattern}` to remove the longest matching suffix.
 
 ```bash
 ${var%%pattern}
 ```
-> Remove suffix (longest)
+
+### Example
+
+```bash
+file="backup.tar.gz"
+
+echo "${file%%.*}"
+```
+
+Output:
+
+```text
+backup
+```
+
+---
+
+## Replace First Match
+
+Use `${var/old/new}` to replace the first match.
 
 ```bash
 ${var/old/new}
 ```
-> Replace first
+
+### Example
+
+```bash
+text="apple apple"
+
+echo "${text/apple/orange}"
+```
+
+Output:
+
+```text
+orange apple
+```
+
+---
+
+## Replace All Matches
+
+Use `${var//old/new}` to replace all matches.
 
 ```bash
 ${var//old/new}
 ```
-> Replace all
+
+### Example
+
+```bash
+text="apple apple"
+
+echo "${text//apple/orange}"
+```
+
+Output:
+
+```text
+orange orange
+```
 
 ---
 
-## String Concatenation
+# String Concatenation
+
+## Concatenate Variables
+
+Variables can be placed next to each other.
 
 ```bash
 $a$b
 ```
-> Concatenate variables
+
+### Example
+
+```bash
+first="Hello"
+second="World"
+
+echo "$first $second"
+```
+
+Output:
+
+```text
+Hello World
+```
+
+---
+
+## Safe Concatenation
+
+Use `"${a}${b}"` when concatenating variables directly.
 
 ```bash
 "${a}${b}"
 ```
-> Safe concatenation
+
+### Example
+
+```bash
+a="Linux"
+b="Bash"
+
+result="${a}-${b}"
+
+echo "$result"
+```
+
+Output:
+
+```text
+Linux-Bash
+```
+
+---
+
+## Append Literal Text
 
 ```bash
 "$a and $b"
 ```
-> With literal text
+
+### Example
+
+```bash
+a="Linux"
+b="Bash"
+
+echo "$a and $b"
+```
+
+Output:
+
+```text
+Linux and Bash
+```
+
+---
+
+## Append to Variable
+
+Use `+=` to append text.
 
 ```bash
 var+="more"
 ```
-> Append to variable
+
+### Example
+
+```bash
+text="Hello"
+text+=" World"
+
+echo "$text"
+```
+
+Output:
+
+```text
+Hello World
+```
 
 ---
 
-## Default Values
+# Default Values
+
+These operators are useful when working with optional variables.
+
+---
+
+## `${var:-default}`
 
 ```bash
 ${var:-default}
 ```
-> Use default if unset
+
+> Use `default` if `var` is unset **or empty**.
+
+### Example
+
+```bash
+name=""
+
+echo "${name:-Guest}"
+```
+
+Output:
+
+```text
+Guest
+```
+
+---
+
+## `${var:=default}`
 
 ```bash
 ${var:=default}
 ```
-> Set default if unset
+
+> Use `default` if the variable is unset or empty, and assign the result to the variable.
+
+### Example
+
+```bash
+unset name
+
+echo "${name:=Guest}"
+echo "$name"
+```
+
+Output:
+
+```text
+Guest
+Guest
+```
+
+---
+
+## `${var:+value}`
 
 ```bash
 ${var:+value}
 ```
-> Use value if set
+
+> Use `value` only if the variable is set and non-empty.
+
+### Example
+
+```bash
+name="Ali"
+
+echo "${name:+User exists}"
+```
+
+Output:
+
+```text
+User exists
+```
+
+---
+
+## `${var:?error}`
 
 ```bash
 ${var:?error}
 ```
-> Error if unset
+
+> Display an error and abort the current shell context if the variable is unset or empty.
+
+### Example
+
+```bash
+: "${USERNAME:?USERNAME is required}"
+```
 
 ---
 
-## Arrays
+# Arrays
+
+## Create an Array
 
 ```bash
-arr=(a b c)
+arr=("Linux" "Bash" "Python")
 ```
-> Declare array
-
-```bash
-arr[0]="value"
-```
-> Set element
-
-```bash
-${arr[0]}
-```
-> Get element
-
-```bash
-${arr[@]}
-```
-> All elements
-
-```bash
-${#arr[@]}
-```
-> Array length
-
-```bash
-${!arr[@]}
-```
-> All indices
-
-```bash
-arr+=("d" "e")
-```
-> Append elements
-
-```bash
-unset arr[1]
-```
-> Delete element
 
 ---
 
-## Arithmetic
+## Set an Element
 
 ```bash
-$((a + b))
+arr[0]="Linux"
 ```
-> Addition
+
+---
+
+## Get an Element
 
 ```bash
-$((a - b))
+echo "${arr[0]}"
 ```
-> Subtraction
+
+Output:
+
+```text
+Linux
+```
+
+---
+
+## Get All Elements
 
 ```bash
-$((a * b))
+echo "${arr[@]}"
 ```
-> Multiplication
+
+---
+
+## Iterate Over an Array
 
 ```bash
-$((a / b))
+for item in "${arr[@]}"; do
+    echo "$item"
+done
 ```
-> Division
+
+Output:
+
+```text
+Linux
+Bash
+Python
+```
+
+> Prefer `"${arr[@]}"` when you want to preserve individual array elements.
+
+---
+
+## Array Length
 
 ```bash
-$((a % b))
+echo "${#arr[@]}"
 ```
-> Modulo
+
+Output:
+
+```text
+3
+```
+
+---
+
+## Array Indices
 
 ```bash
-$((a ** b))
+echo "${!arr[@]}"
 ```
-> Exponent
+
+Output:
+
+```text
+0 1 2
+```
+
+---
+
+## Append Elements
+
+```bash
+arr+=("Git" "Docker")
+```
+
+---
+
+## Delete an Element
+
+```bash
+unset 'arr[1]'
+```
+
+> Quoting the array subscript is a good habit, especially when used with `unset`.
+
+---
+
+# Arithmetic
+
+Bash supports integer arithmetic using `$((...))` and `((...))`.
+
+---
+
+## Addition
+
+```bash
+echo $((a + b))
+```
+
+### Example
+
+```bash
+a=10
+b=5
+
+echo $((a + b))
+```
+
+Output:
+
+```text
+15
+```
+
+---
+
+## Subtraction
+
+```bash
+echo $((a - b))
+```
+
+Output:
+
+```text
+5
+```
+
+---
+
+## Multiplication
+
+```bash
+echo $((a * b))
+```
+
+Output:
+
+```text
+50
+```
+
+---
+
+## Division
+
+```bash
+echo $((a / b))
+```
+
+> Bash integer division truncates the decimal part.
+
+### Example
+
+```bash
+echo $((7 / 2))
+```
+
+Output:
+
+```text
+3
+```
+
+---
+
+## Modulo
+
+```bash
+echo $((a % b))
+```
+
+### Example
+
+```bash
+echo $((7 % 2))
+```
+
+Output:
+
+```text
+1
+```
+
+---
+
+## Exponent
+
+```bash
+echo $((2 ** 3))
+```
+
+Output:
+
+```text
+8
+```
+
+---
+
+## Increment
 
 ```bash
 ((i++))
 ```
-> Increment
+
+### Example
+
+```bash
+i=5
+((i++))
+
+echo "$i"
+```
+
+Output:
+
+```text
+6
+```
+
+---
+
+## Decrement
 
 ```bash
 ((i--))
 ```
-> Decrement
+
+---
+
+## Add and Assign
 
 ```bash
 ((i += 5))
 ```
-> Add and assign
+
+### Example
+
+```bash
+i=10
+((i += 5))
+
+echo "$i"
+```
+
+Output:
+
+```text
+15
+```
 
 ---
 
-## Conditionals
+# Conditionals
+
+## If / Elif / Else
 
 ```bash
-if [[ cond ]]; then
+if [[ condition ]]; then
     # code
-elif [[ cond ]]; then
+elif [[ condition ]]; then
     # code
 else
     # code
 fi
 ```
-> If-elif-else conditional block
+
+### Example
 
 ```bash
-[[ cond ]] && cmd
-```
-> Short-circuit and
+age=20
 
-```bash
-[[ cond ]] || cmd
+if (( age >= 18 )); then
+    echo "Adult"
+else
+    echo "Minor"
+fi
 ```
-> Short-circuit or
+
+Output:
+
+```text
+Adult
+```
 
 ---
 
-## Test Command
+## Short-Circuit AND
+
+```bash
+[[ condition ]] && command
+```
+
+### Example
+
+```bash
+[[ -f "config.txt" ]] && echo "File exists"
+```
+
+> The command runs only if the condition succeeds.
+
+---
+
+## Short-Circuit OR
+
+```bash
+[[ condition ]] || command
+```
+
+### Example
+
+```bash
+[[ -f "config.txt" ]] || echo "File not found"
+```
+
+---
+
+# Test Command
+
+Bash commonly uses `[[ ... ]]` for conditional tests.
+
+> `[[ ... ]]` is generally safer and more feature-rich than the older `[ ... ]` syntax.
+
+---
+
+## Check Empty String
 
 ```bash
 [[ -z $str ]]
 ```
-> String is empty
+
+### Example
+
+```bash
+str=""
+
+if [[ -z $str ]]; then
+    echo "Empty"
+fi
+```
+
+Output:
+
+```text
+Empty
+```
+
+---
+
+## Check Non-Empty String
 
 ```bash
 [[ -n $str ]]
 ```
-> String not empty
+
+### Example
+
+```bash
+str="Bash"
+
+[[ -n $str ]] && echo "Not empty"
+```
+
+---
+
+## String Equality
 
 ```bash
 [[ $a == $b ]]
 ```
-> Strings equal
+
+### Example
+
+```bash
+a="Linux"
+b="Linux"
+
+[[ $a == $b ]] && echo "Equal"
+```
+
+Output:
+
+```text
+Equal
+```
+
+---
+
+## String Inequality
 
 ```bash
 [[ $a != $b ]]
 ```
-> Strings not equal
+
+---
+
+## Regex Match
 
 ```bash
 [[ $a =~ regex ]]
 ```
-> Regex match
+
+### Example
+
+```bash
+email="user@example.com"
+
+if [[ $email =~ ^[^@]+@[^@]+$ ]]; then
+    echo "Valid format"
+fi
+```
+
+Output:
+
+```text
+Valid format
+```
+
+---
+
+## Glob Pattern Match
 
 ```bash
 [[ $a == *pattern* ]]
 ```
-> Glob pattern match
+
+### Example
+
+```bash
+file="backup.tar.gz"
+
+if [[ $file == *.gz ]]; then
+    echo "Compressed file"
+fi
+```
+
+Output:
+
+```text
+Compressed file
+```
 
 ---
 
-## Numeric Comparisons
+# Numeric Comparisons
+
+## Equal
 
 ```bash
 [[ $a -eq $b ]]
 ```
-> Equal
+
+---
+
+## Not Equal
 
 ```bash
 [[ $a -ne $b ]]
 ```
-> Not equal
+
+---
+
+## Less Than
 
 ```bash
 [[ $a -lt $b ]]
 ```
-> Less than
+
+---
+
+## Less Than or Equal
 
 ```bash
 [[ $a -le $b ]]
 ```
-> Less or equal
+
+---
+
+## Greater Than
 
 ```bash
 [[ $a -gt $b ]]
 ```
-> Greater than
+
+---
+
+## Greater Than or Equal
 
 ```bash
 [[ $a -ge $b ]]
 ```
-> Greater or equal
+
+---
+
+## Arithmetic Comparison
 
 ```bash
 (( a == b ))
 ```
-> Equal (arithmetic)
+
+### Example
 
 ```bash
-(( a < b ))
+a=10
+b=20
+
+if (( a < b )); then
+    echo "$a is smaller"
+fi
 ```
-> Less than (arithmetic)
+
+Output:
+
+```text
+10 is smaller
+```
+
+> For numeric conditions, `(( ... ))` is often cleaner than `[[ $a -lt $b ]]`.
 
 ---
 
-## File Tests
+# File Tests
+
+## File Exists
 
 ```bash
 [[ -e $file ]]
 ```
-> File exists
+
+---
+
+## Regular File
 
 ```bash
 [[ -f $file ]]
 ```
-> Is regular file
+
+### Example
+
+```bash
+file="config.txt"
+
+if [[ -f $file ]]; then
+    echo "Regular file"
+fi
+```
+
+---
+
+## Directory
 
 ```bash
 [[ -d $file ]]
 ```
-> Is directory
+
+---
+
+## Symbolic Link
 
 ```bash
 [[ -L $file ]]
 ```
-> Is symlink
+
+---
+
+## Readable
 
 ```bash
 [[ -r $file ]]
 ```
-> Is readable
+
+---
+
+## Writable
 
 ```bash
 [[ -w $file ]]
 ```
-> Is writable
+
+---
+
+## Executable
 
 ```bash
 [[ -x $file ]]
 ```
-> Is executable
+
+---
+
+## File Is Not Empty
 
 ```bash
 [[ -s $file ]]
 ```
-> Size > 0
+
+> True when the file exists and has a size greater than zero.
+
+---
+
+## Newer Than
 
 ```bash
 [[ $a -nt $b ]]
 ```
-> a newer than b
+
+> True when file `a` is newer than file `b`.
+
+### Example
+
+```bash
+if [[ backup.tar -nt backup.old.tar ]]; then
+    echo "New backup available"
+fi
+```
 
 ---
 
-## Logical Operators
+# Logical Operators
+
+## AND
 
 ```bash
 [[ cond1 && cond2 ]]
 ```
-> AND
+
+### Example
+
+```bash
+age=25
+user="admin"
+
+if [[ $age -ge 18 && $user == "admin" ]]; then
+    echo "Access granted"
+fi
+```
+
+---
+
+## OR
 
 ```bash
 [[ cond1 || cond2 ]]
 ```
-> OR
+
+---
+
+## NOT
 
 ```bash
 [[ ! cond ]]
 ```
-> NOT
+
+### Example
 
 ```bash
-[[ (cond1) ]]
+if [[ ! -f config.txt ]]; then
+    echo "Config file missing"
+fi
 ```
-> Grouping
 
 ---
 
-## Case Statement
+## Grouping
+
+Inside `[[ ... ]]`, use parentheses for grouping when needed.
 
 ```bash
-case $var in
+[[ ( cond1 || cond2 ) && cond3 ]]
+```
+
+### Example
+
+```bash
+if [[ ($USER == "root" || $USER == "admin") && -f config.txt ]]; then
+    echo "Allowed"
+fi
+```
+
+---
+
+# Case Statement
+
+`case` is useful when comparing one value against multiple patterns.
+
+```bash
+case "$var" in
     pattern1)
         # code
         ;;
@@ -538,381 +1743,1035 @@ case $var in
         ;;
 esac
 ```
-> Case statement structure
+
+### Example
+
+```bash
+read -r -p "Enter a command: " cmd
+
+case "$cmd" in
+    start)
+        echo "Starting..."
+        ;;
+    stop)
+        echo "Stopping..."
+        ;;
+    restart)
+        echo "Restarting..."
+        ;;
+    *)
+        echo "Unknown command"
+        ;;
+esac
+```
 
 ---
 
-## For Loop
+# For Loop
+
+## Loop Over a List
 
 ```bash
 for i in 1 2 3; do
-    echo $i
-done
-```
-> Loop over list
-
-```bash
-for i in "${arr[@]}"; do
-    echo $i
-done
-```
-> Loop over array
-
-```bash
-for i in *.txt; do
     echo "$i"
 done
 ```
-> Loop over files
 
-```bash
-for i in {1..10}; do
-    echo $i
-done
-```
-> Loop over range
+Output:
 
-```bash
-for ((i=0; i<10; i++)); do
-    echo $i
-done
+```text
+1
+2
+3
 ```
-> C-style for loop
 
 ---
 
-## While & Until Loops
+## Loop Over an Array
 
 ```bash
-while [[ cond ]]; do
+arr=("Linux" "Bash" "Git")
+
+for item in "${arr[@]}"; do
+    echo "$item"
+done
+```
+
+Output:
+
+```text
+Linux
+Bash
+Git
+```
+
+---
+
+## Loop Over Files
+
+```bash
+for file in *.txt; do
+    echo "$file"
+done
+```
+
+> Expands the pattern to matching `.txt` files.
+
+---
+
+## Brace Expansion
+
+```bash
+for i in {1..5}; do
+    echo "$i"
+done
+```
+
+Output:
+
+```text
+1
+2
+3
+4
+5
+```
+
+> `{1..5}` is Bash brace expansion, not a general-purpose numeric loop.
+
+---
+
+## C-Style For Loop
+
+```bash
+for ((i=0; i<5; i++)); do
+    echo "$i"
+done
+```
+
+Output:
+
+```text
+0
+1
+2
+3
+4
+```
+
+---
+
+# While & Until Loops
+
+## While
+
+```bash
+while [[ condition ]]; do
     # code
 done
 ```
-> While loop
+
+### Example
 
 ```bash
-until [[ cond ]]; do
+i=1
+
+while (( i <= 3 )); do
+    echo "$i"
+    ((i++))
+done
+```
+
+Output:
+
+```text
+1
+2
+3
+```
+
+---
+
+## Until
+
+```bash
+until [[ condition ]]; do
     # code
 done
 ```
-> Until loop
+
+### Example
 
 ```bash
-while read -r line; do
+i=1
+
+until (( i > 3 )); do
+    echo "$i"
+    ((i++))
+done
+```
+
+Output:
+
+```text
+1
+2
+3
+```
+
+> `while` runs while the condition is true.  
+> `until` runs while the condition is false.
+
+---
+
+## Read File Line by Line
+
+```bash
+while IFS= read -r line; do
     echo "$line"
-done < file
+done < file.txt
 ```
-> Read file lines
+
+> This is a safe common pattern for reading text files line by line.
+
+---
+
+## Infinite Loop
 
 ```bash
 while :; do
     # code
 done
 ```
-> Infinite loop
+
+### Example
+
+```bash
+while :; do
+    echo "Running..."
+    sleep 1
+done
+```
+
+Stop with `Ctrl+C`.
 
 ---
 
-## Functions
+# Functions
+
+## Define a Function
+
+Use the following syntax to define a function:
 
 ```bash
 func() {
     # code
 }
 ```
-> Define function
+
+### Example
+
+```bash
+hello() {
+    echo "Hello!"
+}
+
+hello
+```
+
+Output:
+
+```text
+Hello!
+```
+
+---
+
+## Alternative Function Syntax
 
 ```bash
 function func {
     # code
 }
 ```
-> Alternative syntax
+
+> `func() { ...; }` is generally preferred because it is more portable across POSIX-like shells, although this guide targets Bash.
+
+---
+
+## Function Arguments
 
 ```bash
-func arg1 arg2
+greet() {
+    echo "Hello $1"
+}
+
+greet "Ali"
 ```
-> Call function
+
+Output:
+
+```text
+Hello Ali
+```
+
+> Inside a function, `$1`, `$2`, `$#`, `$@`, etc. refer to the function's positional parameters.
+
+---
+
+## Local Variable
+
+Use `local` to limit a variable to the function scope.
 
 ```bash
-$1, $2
+local var="value"
 ```
-> Function arguments
+
+### Example
 
 ```bash
-local var="val"
+test() {
+    local name="Ali"
+    echo "$name"
+}
+
+test
 ```
-> Local variable
+
+> `local` limits the variable to the function scope.
+
+---
+
+## Return Status
+
+Use `return` to set a function's exit status.
 
 ```bash
 return 0
 ```
-> Return exit code
+
+### Example
+
+```bash
+check_file() {
+    [[ -f "$1" ]] || return 1
+    return 0
+}
+
+check_file "config.txt"
+
+if [[ $? -eq 0 ]]; then
+    echo "File exists"
+fi
+```
+
+---
+
+## Capture Function Output
+
+Use command substitution to capture a function's stdout.
 
 ```bash
 result=$(func)
 ```
-> Capture output
+
+### Example
+
+```bash
+get_name() {
+    echo "Ali"
+}
+
+name=$(get_name)
+
+echo "$name"
+```
+
+Output:
+
+```text
+Ali
+```
+
+> Command substitution captures the function's stdout. The function's exit status can still be checked separately.
 
 ---
 
-## Input/Output
+# Input / Output
+
+## Echo
 
 ```bash
-echo "text"
+echo "Hello"
 ```
-> Print with newline
+
+Output:
+
+```text
+Hello
+```
+
+---
+
+## Echo Without Newline
 
 ```bash
-echo -n "text"
+echo -n "Hello"
 ```
-> Print without newline
+
+---
+
+## Escape Sequences
 
 ```bash
-echo -e "a\tb"
+echo -e "A\tB"
 ```
-> Enable escapes
+
+Possible output:
+
+```text
+A       B
+```
+
+> For predictable formatted output, `printf` is generally preferred over `echo -e`.
+
+---
+
+## Printf
+
+Use `printf` for predictable formatted output.
 
 ```bash
 printf "%s\n" "$var"
 ```
-> Formatted output
+
+### Example
+
+```bash
+name="Ali"
+
+printf "Hello, %s\n" "$name"
+```
+
+Output:
+
+```text
+Hello, Ali
+```
+
+---
+
+## Read Input
 
 ```bash
 read var
 ```
-> Read into variable
+
+### Example
 
 ```bash
-read -p "prompt: " var
+read name
+echo "Hello $name"
 ```
-> Read with prompt
+
+---
+
+## Read With Prompt
 
 ```bash
-read -s var
+read -r -p "Name: " name
 ```
-> Read silently
+
+---
+
+## Silent Input
+
+```bash
+read -r -s password
+```
+
+> Useful for passwords because input is not displayed.
+
+---
+
+## Raw Input
 
 ```bash
 read -r var
 ```
-> Raw input (no escapes)
+
+> `-r` prevents backslashes from being interpreted as escape characters.
 
 ---
 
-## Redirection
+# Redirection
+
+## Redirect stdout
 
 ```bash
 cmd > file
 ```
-> Redirect stdout
+
+### Example
+
+```bash
+echo "Hello" > output.txt
+```
+
+> Creates the file or overwrites it.
+
+---
+
+## Append stdout
 
 ```bash
 cmd >> file
 ```
-> Append stdout
+
+### Example
+
+```bash
+echo "New line" >> output.txt
+```
+
+> Appends instead of overwriting.
+
+---
+
+## Redirect stderr
 
 ```bash
 cmd 2> file
 ```
-> Redirect stderr
+
+### Example
+
+```bash
+ls /not-found 2> error.log
+```
+
+---
+
+## Redirect stderr to stdout
 
 ```bash
 cmd 2>&1
 ```
-> Stderr to stdout
+
+### Example
+
+```bash
+cmd > output.log 2>&1
+```
+
+> Redirects both stdout and stderr to the same file.
+
+---
+
+## Redirect stdout and stderr
 
 ```bash
 cmd &> file
 ```
-> Both to file
+
+> Bash-specific shorthand for redirecting both stdout and stderr.
+
+---
+
+## Redirect stdin
 
 ```bash
 cmd < file
 ```
-> Redirect stdin
+
+### Example
+
+```bash
+wc -l < file.txt
+```
+
+---
+
+## Pipe
 
 ```bash
 cmd1 | cmd2
 ```
-> Pipe stdout
+
+### Example
+
+```bash
+ps aux | grep bash
+```
+
+> Sends stdout of the first command to stdin of the second command.
 
 ---
 
-## Here Documents
+# Here Documents
+
+## Basic Here Document
 
 ```bash
 cat <<EOF
-Multi-line text
+Hello
+Bash
 EOF
 ```
-> Here document
+
+Output:
+
+```text
+Hello
+Bash
+```
+
+---
+
+## Variable Expansion
+
+```bash
+name="Ali"
+
+cat <<EOF
+Hello $name
+EOF
+```
+
+Output:
+
+```text
+Hello Ali
+```
+
+---
+
+## Disable Expansion
 
 ```bash
 cat <<'EOF'
-No expansion
+Hello $name
 EOF
 ```
-> No expansion
+
+Output:
+
+```text
+Hello $name
+```
+
+> Quoting the delimiter prevents parameter expansion, command substitution, and arithmetic expansion.
+
+---
+
+## Strip Leading Tabs
 
 ```bash
 cat <<-EOF
-    Strip tabs
+	Hello
+	Bash
 EOF
 ```
-> Strip leading tabs
+
+> `<<-` removes leading tab characters from the here-document body.
+
+---
+
+## Here String
 
 ```bash
 cmd <<< "string"
 ```
-> Here string
+
+### Example
+
+```bash
+wc -c <<< "Hello"
+```
+
+> Sends a single string to stdin.
 
 ---
 
-## Select Menu
+# Select Menu
+
+`select` is a Bash-specific construct for creating simple interactive menus.
 
 ```bash
-select opt in a b c; do
+select opt in Start Stop Exit; do
     echo "You chose: $opt"
     break
 done
 ```
-> Create menu
+
+Example interaction:
+
+```text
+1) Start
+2) Stop
+3) Exit
+#?
+```
+
+---
+
+## `$REPLY`
 
 ```bash
-$opt
+select opt in Start Stop Exit; do
+    echo "Option: $opt"
+    echo "Input: $REPLY"
+    break
+done
 ```
-> Selected option
 
-```bash
-$REPLY
-```
-> User's input
+> `$REPLY` contains the user's entered menu number.
+
+---
+
+## Break
 
 ```bash
 break
 ```
-> Exit menu
+
+> Exits the current loop.
 
 ---
 
-## Debugging
+# Debugging
+
+## Trace Script
+
+Use `bash -x script.sh` to trace command execution.
 
 ```bash
 bash -x script.sh
 ```
-> Trace execution
+
+> Prints commands as Bash executes them.
+
+---
+
+## Enable Tracing
 
 ```bash
 set -x
 ```
-> Enable tracing
+
+---
+
+## Disable Tracing
 
 ```bash
 set +x
 ```
-> Disable tracing
+
+---
+
+## Print Shell Input
 
 ```bash
 set -v
 ```
-> Print input lines
+
+> Prints shell input lines as they are read.
+
+---
+
+## Exit on Error
 
 ```bash
 set -e
 ```
-> Exit on error
+
+> Causes the shell to exit when a simple command fails, subject to Bash's rules and exceptions.
+
+---
+
+## Error on Unset Variables
 
 ```bash
 set -u
 ```
-> Error on unset vars
+
+### Example
+
+```bash
+set -u
+
+echo "$undefined"
+```
+
+> Bash reports an error because the variable is unset.
+
+---
+
+## Pipefail
 
 ```bash
 set -o pipefail
 ```
-> Pipe error status
+
+> Makes a pipeline fail if any command in the pipeline fails, rather than only considering the final command.
 
 ---
 
-## Useful Patterns
+## Recommended Strict Mode
+
+A common Bash scripting pattern is:
+
+```bash
+set -Eeuo pipefail
+```
+
+> Enables stricter error handling and can help catch bugs earlier.
+
+### Example
+
+```bash
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+
+echo "Script started"
+```
+
+---
+
+# Useful Patterns
+
+## Default Value From Command
 
 ```bash
 ${var:-$(cmd)}
 ```
-> Default from command
+
+### Example
 
 ```bash
-[[ -f $f ]] && source $f
+name="${USER:-$(whoami)}"
+
+echo "$name"
 ```
-> Source if exists
+
+---
+
+## Source File If It Exists
 
 ```bash
-while IFS= read -r line
+[[ -f "$f" ]] && source "$f"
 ```
-> Read lines safely
+
+### Example
+
+```bash
+config="config.sh"
+
+[[ -f "$config" ]] && source "$config"
+```
+
+---
+
+## Safely Read Lines
+
+```bash
+while IFS= read -r line; do
+    echo "$line"
+done < file.txt
+```
+
+> `IFS=` and `-r` help preserve whitespace and backslashes.
+
+---
+
+## Safe Array Expansion
 
 ```bash
 "${arr[@]}"
 ```
-> Safe array expansion
+
+### Example
+
+```bash
+arr=("hello world" "Linux" "Bash")
+
+for item in "${arr[@]}"; do
+    echo "$item"
+done
+```
+
+Output:
+
+```text
+hello world
+Linux
+Bash
+```
+
+---
+
+## Append an Argument
 
 ```bash
 set -- "$@" newarg
 ```
-> Append to args
+
+### Example
+
+```bash
+set -- "$@" backup
+
+printf '<%s>\n' "$@"
+```
+
+Output:
+
+```text
+<backup>
+```
+
+> `set --` replaces the positional parameters. This example appends `backup` to the existing arguments.
 
 ---
 
-## Configuration Files
+# Configuration Files
+
+## `~/.bashrc`
+
+`~/.bashrc` is commonly used for interactive non-login Bash shells.
+
+Typical uses:
 
 ```bash
-~/.bashrc
+alias ll='ls -lah'
+export EDITOR=vim
 ```
-> Interactive non-login
-
-```bash
-~/.bash_profile
-```
-> Login shell
-
-```bash
-~/.profile
-```
-> Generic login
-
-```bash
-~/.bash_aliases
-```
-> Alias definitions
-
-```bash
-/etc/bash.bashrc
-```
-> System-wide
-
-```bash
-/etc/profile
-```
-> System login
 
 ---
 
-## 📦 Additional Resources
+## `~/.bash_profile`
 
-- **[ShellCheck](https://www.shellcheck.net/)** - Online Bash linting tool
-- **[Bash Reference Manual](https://www.gnu.org/software/bash/manual/)** - Official documentation
-- **[Bash Hackers Wiki](https://wiki.bash-hackers.org/)** - Community knowledge base
-- **[Explainshell](https://explainshell.com/)** - Explains shell commands
+`~/.bash_profile` is used by Bash login shells when present.
 
 ---
 
-## 📝 License
+## `~/.profile`
 
-This cheat sheet is open source. Feel free to use, modify, and share!
+`~/.profile` is a generic login-shell configuration file used by many shells and environments.
 
 ---
 
-**⭐ Star this repository if you find it useful!**
+## `~/.bash_aliases`
 
-*Last Updated: 2024*
+`~/.bash_aliases` is a common location for user-defined aliases when sourced by `.bashrc`.
+
+---
+
+## `/etc/bash.bashrc`
+
+`/etc/bash.bashrc` is a system-wide Bash configuration file on distributions that provide it.
+
+---
+
+## `/etc/profile`
+
+`/etc/profile` is used for system-wide login-shell configuration.
+
+> ⚠️ Configuration file behavior can vary between Linux distributions and shell startup modes.
+
+---
+
+# 📦 Additional Resources
+
+- [**ShellCheck**](https://www.shellcheck.net/) — Static analysis tool for shell scripts.
+- [**Bash Reference Manual**](https://www.gnu.org/software/bash/manual/) — Official Bash documentation.
+- [**Bash Hackers Wiki**](https://wiki.bash-hackers.org/) — Bash knowledge and examples.
+- [**ExplainShell**](https://explainshell.com/) — Helps explain shell commands.
+
+---
+
+# 📚 Recommended Learning Path
+
+If you're learning Bash from scratch, a good order is:
+
+```text
+Variables
+    ↓
+Special Variables
+    ↓
+Quoting
+    ↓
+String Operations
+    ↓
+Conditions
+    ↓
+Loops
+    ↓
+Arrays
+    ↓
+Functions
+    ↓
+Input / Output
+    ↓
+Redirection & Pipes
+    ↓
+Debugging
+    ↓
+Real-world Scripts
+```
+
+---
+
+# 🤝 Contributing
+
+Found an error or have a useful Bash example?
+
+Feel free to:
+
+1. Fork this repository
+2. Create a new branch
+3. Make your changes
+4. Commit your changes
+5. Open a Pull Request
+
+---
+
+# 📝 License
+
+This cheat sheet is open source. Feel free to use, modify, and share it.
+
+---
+
+⭐ **If you find this cheat sheet useful, consider giving the repository a Star!**
+
+**Last Updated: 2026**```bash
+```
+
+
+Use `$name` or `"${name}"` to access a variable.
+
+```
+```bash
+✅ Correct:
+```
+
+
+
+## Create a Variable
+# Variables
+
+```text
+
+
+echo "$NAME"
+source config.sh
+```bash
+Terminal:
+NAME="Ali"
+
+### Example
+
+> Executes the script in the **current shell**, so variables and functions can remain available afterward.
+
+ 
