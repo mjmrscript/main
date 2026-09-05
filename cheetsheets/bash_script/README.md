@@ -150,9 +150,6 @@ name="Ali"
 ```bash
 name = "Ali"
 ```
-### Example
-	
-name="Ali"
 
 ---
 
@@ -170,7 +167,7 @@ Ali
 ## Explicit Variable Expansion
 
 Use `"${name}"` when adding text directly after a variable.
-
+```bash
 echo "${name}"
 ```
 
@@ -294,10 +291,6 @@ Bash provides special variables for script arguments, process information, and e
 | --- | --- |
 | `$0` | Script or shell name |
 | `$1` - `$9` | Positional parameters |
-| `${10}` | 10th and later parameters |
-| `$#` | Number of positional parameters |
-| `$@` | All positional parameters |
-| `$*` | All positional parameters as one word when quoted |
 | `$?` | Exit status of the last command |
 | `$$` | PID of the current shell |
 | `$!` | PID of the most recent background process |
@@ -349,90 +342,6 @@ Output:
 Name: Ali
 Age: 25
 ```
-
----
-
-## `${10}` — 10th Argument
-
-For arguments beyond `$9`, use braces.
-
-```bash
-echo "${10}"
-```
-
----
-
-## `$#` — Number of Arguments
-
-Use `$#` to get the number of positional parameters.
-
-```bash
-echo "Arguments: $#"
-```
-
-Run:
-
-```bash
-./script.sh one two three
-```
-
-Output:
-
-```text
-Arguments: 3
-```
-
----
-
-## `$@` — All Arguments
-
-Use `"$@"` to iterate over arguments while preserving them individually.
-
-```bash
-for arg in "$@"; do
-    echo "$arg"
-done
-```
-
-Run:
-
-```bash
-./script.sh "hello world" linux bash
-```
-
-Output:
-
-```text
-hello world
-linux
-bash
-```
-
-> `"$@"` preserves each argument as a separate word. This is usually the safest way to iterate over arguments.
-
----
-
-## `$*` — All Arguments
-
-Use `"$*"` to expand all arguments into one word.
-
-```bash
-echo "$*"
-```
-
-Run:
-
-```bash
-./script.sh Linux Bash Python
-```
-
-Output:
-
-```text
-Linux Bash Python
-```
-
-> When quoted, `"$*"` expands all arguments into a single word, unlike `"$@"`.
 
 ---
 
@@ -941,32 +850,6 @@ Guest
 
 ---
 
-## `${var:=default}`
-
-```bash
-${var:=default}
-```
-
-> Use `default` if the variable is unset or empty, and assign the result to the variable.
-
-### Example
-
-```bash
-unset name
-
-echo "${name:=Guest}"
-echo "$name"
-```
-
-Output:
-
-```text
-Guest
-Guest
-```
-
----
-
 ## `${var:+value}`
 
 ```bash
@@ -987,22 +870,6 @@ Output:
 
 ```text
 User exists
-```
-
----
-
-## `${var:?error}`
-
-```bash
-${var:?error}
-```
-
-> Display an error and abort the current shell context if the variable is unset or empty.
-
-### Example
-
-```bash
-: "${USERNAME:?USERNAME is required}"
 ```
 
 ---
@@ -1077,20 +944,6 @@ Output:
 
 ```text
 3
-```
-
----
-
-## Array Indices
-
-```bash
-echo "${!arr[@]}"
-```
-
-Output:
-
-```text
-0 1 2
 ```
 
 ---
@@ -1351,6 +1204,20 @@ Bash commonly uses `[[ ... ]]` for conditional tests.
 > `[[ ... ]]` is generally safer and more feature-rich than the older `[ ... ]` syntax.
 
 ---
+| Variable | Description |
+| --- | --- |
+| `-z` | Check Empty String |
+| `-n` | Check Non-Empty String |
+| `==` - `-eq` | Equality |
+| `!=` - `-nq` | Inequality |
+| `=~` | Regex Match |
+| `-lt` | Less Than |
+| `-le` | Less Than or Equal |
+| `-gt` | Greater Than |
+| `-ge` | Greater Than or Equal |
+
+
+---
 
 ## Check Empty String
 
@@ -1550,6 +1417,17 @@ Output:
 
 # File Tests
 
+---
+| Variable | Description |
+| --- | --- |
+| `-e` | File Exists |
+| `-f` | Regular File |
+| `-d` | Directory |
+| `-L` | Symbolic Link |
+| `-r` - `-w` - `-x` | Readable - Writable - Executable |
+| `-s` | File Is Not Empty |
+---
+
 ## File Exists
 
 ```bash
@@ -1624,23 +1502,6 @@ fi
 
 > True when the file exists and has a size greater than zero.
 
----
-
-## Newer Than
-
-```bash
-[[ $a -nt $b ]]
-```
-
-> True when file `a` is newer than file `b`.
-
-### Example
-
-```bash
-if [[ backup.tar -nt backup.old.tar ]]; then
-    echo "New backup available"
-fi
-```
 
 ---
 
@@ -2000,29 +1861,6 @@ Hello Ali
 
 ---
 
-## Local Variable
-
-Use `local` to limit a variable to the function scope.
-
-```bash
-local var="value"
-```
-
-### Example
-
-```bash
-test() {
-    local name="Ali"
-    echo "$name"
-}
-
-test
-```
-
-> `local` limits the variable to the function scope.
-
----
-
 ## Return Status
 
 Use `return` to set a function's exit status.
@@ -2115,30 +1953,6 @@ A       B
 ```
 
 > For predictable formatted output, `printf` is generally preferred over `echo -e`.
-
----
-
-## Printf
-
-Use `printf` for predictable formatted output.
-
-```bash
-printf "%s\n" "$var"
-```
-
-### Example
-
-```bash
-name="Ali"
-
-printf "Hello, %s\n" "$name"
-```
-
-Output:
-
-```text
-Hello, Ali
-```
 
 ---
 
@@ -2345,6 +2159,17 @@ Hello $name
 
 ---
 
+## Add text in file
+```bash
+cat <<EOF > output.txt
+Hello
+Bash
+This is a test
+EOF
+```
+> For **Append** Use `cat <<EOF >> output.txt`
+
+---
 ## Strip Leading Tabs
 
 ```bash
@@ -2439,7 +2264,7 @@ bash -x script.sh
 ```bash
 set -x
 ```
-
+> Show command befor execute
 ---
 
 ## Disable Tracing
@@ -2456,7 +2281,7 @@ set +x
 set -v
 ```
 
-> Prints shell input lines as they are read.
+> Prints shell input lines as they are read.( Like `set -x`)
 
 ---
 
@@ -2670,89 +2495,3 @@ export EDITOR=vim
 - [**Bash Hackers Wiki**](https://wiki.bash-hackers.org/) — Bash knowledge and examples.
 - [**ExplainShell**](https://explainshell.com/) — Helps explain shell commands.
 
----
-
-# 📚 Recommended Learning Path
-
-If you're learning Bash from scratch, a good order is:
-
-```text
-Variables
-    ↓
-Special Variables
-    ↓
-Quoting
-    ↓
-String Operations
-    ↓
-Conditions
-    ↓
-Loops
-    ↓
-Arrays
-    ↓
-Functions
-    ↓
-Input / Output
-    ↓
-Redirection & Pipes
-    ↓
-Debugging
-    ↓
-Real-world Scripts
-```
-
----
-
-# 🤝 Contributing
-
-Found an error or have a useful Bash example?
-
-Feel free to:
-
-1. Fork this repository
-2. Create a new branch
-3. Make your changes
-4. Commit your changes
-5. Open a Pull Request
-
----
-
-# 📝 License
-
-This cheat sheet is open source. Feel free to use, modify, and share it.
-
----
-
-⭐ **If you find this cheat sheet useful, consider giving the repository a Star!**
-
-**Last Updated: 2026**```bash
-```
-
-
-Use `$name` or `"${name}"` to access a variable.
-
-```
-```bash
-✅ Correct:
-```
-
-
-
-## Create a Variable
-# Variables
-
-```text
-
-
-echo "$NAME"
-source config.sh
-```bash
-Terminal:
-NAME="Ali"
-
-### Example
-
-> Executes the script in the **current shell**, so variables and functions can remain available afterward.
-
- 
