@@ -10,7 +10,7 @@ This cheat sheet covers Bash syntax, variables, parameters, strings, arrays, con
 
 ## 📋 Table of Contents
 
-1. [Script Basics](#script-basics)
+1. [Script Basics - مبانی اسکریپت](#script-basics)
 2. [Variables](#variables)
 3. [Special Variables](#special-variables)
 4. [Quoting](#quoting)
