@@ -316,7 +316,7 @@ for name in names:
 # Once it is found, there is no need to search for the rest.
 ```
 
-===
+#### **************************************************
 
 ## For Loops
 
@@ -528,7 +528,7 @@ class Cat:
     def create_kitten(cls, name):
         return cls(f"Baby {name}")
 ```
-## **************************************************
+#### **************************************************
 ### EXAMPLE for @classmethod
 
 ```python
@@ -556,7 +556,7 @@ d1 = Date(2024, 1, 15)              # معمولی
 d2 = Date.from_string("2024-01-15") # از رشته
 d3 = Date.today()                   # امروز
 ```
-## **************************************************
+#### **************************************************
 
 ## Inheritance
 
@@ -602,16 +602,18 @@ else:
 finally:
     print("Calculation attempted")
 ```
-## **************************************************
+#### **************************************************
 
 > ValueError          # Invalid value
 ```python
 int("hello")
 ```
+
 > TypeError           # Wrong type
 ```python
 "a" + 1
 ```
+
 > IndexError          # List index out of range
 ```python
 numbers = [10, 20, 30]
@@ -623,6 +625,7 @@ numbers[2]     # 30  OK
 
 numbers[3]     # IndexError: list index out of range
 ```
+
 > KeyError            # Dict key not found
 ‍‍‍```python
 person = {"name": "Ali", "age": 25}
@@ -632,21 +635,26 @@ person["age"]      # 25       OK
 
 person["city"]     # KeyError: 'city'
 ```
+
 > FileNotFoundError   # File doesn't exist
 ‍‍```python
 open("nope.txt")
 ```
+
 > SyntaxError 	      # Typographical error
 ```python
 print("hello"
 ```
+
 > IndentationError    # Nesting error
 Wrong spacing
+
 > NameError	      # Undefined name
 ```python
 print(x)
 # x not defind
 ```
+
 > AttributeError      # text = "hello"
 ```python
 text.upper()      # "HELLO"    OK
@@ -655,33 +663,42 @@ text.lower()      # "hello"    OK
 text.foo()        # AttributeError: 'str' object has no attribute 'foo'
 # The string "hello" has no method called foo
 ```
+
 > ZeroDivisionError   # Division by zero
 ```python
 x = 1 / 0
 ```
+
 > ImportError 	      # Module not found
 ```python
 import nope
 ```
+
 > ModuleNotFoundError # Module not install
 ```python
 import pandas
 ```
+
 > KeyboardInterrupt   # when we use CTRL+C
 CTRL+C
+
 > RuntimeError	      # General runtime error
+
 > PermissionError     # dont permission
 When opening a system file
+
 > IsADirectoryError   # It is the directory path not folder
 ```python
 open("my_folder")
 # IsADirectoryError: [Errno 21] Is a directory: 'my_folder'
 ```
+
 > TimeoutError        # teme out
 Long-duration operation
+
 > ConnectionError     # Error of connection
 
-## **************************************************
+#### **************************************************
 
 ## Raising Exceptions
 
