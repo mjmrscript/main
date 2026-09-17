@@ -647,6 +647,7 @@ print("hello"
 ```
 
 > IndentationError    # Nesting error
+
 Wrong spacing
 
 > NameError	      # Undefined name
@@ -680,11 +681,13 @@ import pandas
 ```
 
 > KeyboardInterrupt   # when we use CTRL+C
+
 CTRL+C
 
 > RuntimeError	      # General runtime error
 
 > PermissionError     # dont permission
+
 When opening a system file
 
 > IsADirectoryError   # It is the directory path not folder
@@ -694,6 +697,7 @@ open("my_folder")
 ```
 
 > TimeoutError        # teme out
+
 Long-duration operation
 
 > ConnectionError     # Error of connection
