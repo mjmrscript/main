@@ -1,4 +1,4 @@
-#Bash Scripting Cheat Sheet
+# Bash Scripting Cheat Sheet
 
 A practical and example-driven reference guide for **Bash scripting**.
 
@@ -1203,13 +1203,13 @@ Bash commonly uses `[[ ... ]]` for conditional tests.
 
 > `[[ ... ]]` is generally safer and more feature-rich than the older `[ ... ]` syntax.
 
----
+
 | Variable | Description |
 | --- | --- |
 | `-z` | Check Empty String |
 | `-n` | Check Non-Empty String |
 | `==` - `-eq` | Equality |
-| `!=` - `-nq` | Inequality |
+| `!=` - `-ne` | Inequality |
 | `=~` | Regex Match |
 | `-lt` | Less Than |
 | `-le` | Less Than or Equal |
@@ -1217,7 +1217,7 @@ Bash commonly uses `[[ ... ]]` for conditional tests.
 | `-ge` | Greater Than or Equal |
 
 
----
+
 
 ## Check Empty String
 
@@ -1417,7 +1417,7 @@ Output:
 
 # File Tests
 
----
+
 | Variable | Description |
 | --- | --- |
 | `-e` | File Exists |
@@ -1426,7 +1426,7 @@ Output:
 | `-L` | Symbolic Link |
 | `-r` - `-w` - `-x` | Readable - Writable - Executable |
 | `-s` | File Is Not Empty |
----
+
 
 ## File Exists
 
@@ -1916,7 +1916,7 @@ Ali
 
 ---
 
-# Input / Output
+# Input/Output
 
 ## Echo
 
@@ -2264,7 +2264,7 @@ bash -x script.sh
 ```bash
 set -x
 ```
-> Show command befor execute
+> Show command before execute , after expansion
 ---
 
 ## Disable Tracing
@@ -2281,7 +2281,7 @@ set +x
 set -v
 ```
 
-> Prints shell input lines as they are read.( Like `set -x`)
+> Prints shell input lines as they are read.( Like `set -x`) , before expansion
 
 ---
 
