@@ -1,4 +1,4 @@
-#Python Cheat Sheet
+# Python Cheat Sheet
 
 A practical and example-driven reference guide for **Python**.
 
@@ -6,9 +6,23 @@ A practical and example-driven reference guide for **Python**.
 
 ## 📋 Table of Contents
 
-1. [To begin - شروع ](#To begin)
-2. [Comments - نظرات](#Comments)
-
+1. [To Begin - شروع](#to-begin)
+2. [Comments - نظرات](#comments)
+3. [Data Types - انواع داده](#data-types)
+4. [Variables and Assignments - متغیرها و انتساب](#variables-and-assignments)
+5. [Strings - رشته‌ها](#strings)
+6. [Numbers and Math - اعداد و ریاضیات](#numbers-and-math)
+7. [Conditionals - شرط‌ها](#conditionals)
+8. [Loops - حلقه‌ها](#loops)
+9. [Functions - توابع](#functions)
+10. [Classes - کلاس‌ها](#classes)
+11. [Exceptions - استثناها](#exceptions)
+12. [Collections - مجموعه‌ها](#collections)
+13. [Comprehensions - کامپرهنشن‌ها](#comprehensions)
+14. [File I/O - ورودی و خروجی فایل](#file-io)
+15. [Imports and Modules - وارد کردن و ماژول‌ها](#imports-and-modules)
+16. [Virtual Environments - محیط‌های مجازی](#virtual-environments)
+17. [Packages - پکیج‌ها](#packages)
 
 ---
 
@@ -46,8 +60,8 @@ python -i my_script.py
 # This is a comment
 # print("This code will not run.")
 print("This will run.") 
-
-> omments are ignored by Python
+```
+> comments are ignored by Python
 
 # Data Types
 
@@ -514,7 +528,7 @@ class Cat:
     def create_kitten(cls, name):
         return cls(f"Baby {name}")
 ```
-##**************************************************
+## **************************************************
 ### EXAMPLE for @classmethod
 
 ```python
@@ -542,7 +556,7 @@ d1 = Date(2024, 1, 15)              # معمولی
 d2 = Date.from_string("2024-01-15") # از رشته
 d3 = Date.today()                   # امروز
 ```
-##**************************************************
+## **************************************************
 
 ## Inheritance
 
@@ -588,7 +602,7 @@ else:
 finally:
     print("Calculation attempted")
 ```
-##**************************************************
+## **************************************************
 
 > ValueError          # Invalid value
 ```python
@@ -667,7 +681,7 @@ open("my_folder")
 Long-duration operation
 > ConnectionError     # Error of connection
 
-##**************************************************
+## **************************************************
 
 ## Raising Exceptions
 
