@@ -272,7 +272,7 @@ before commit
 
 ### You are working on a branch but suddenly need to switch to another one; by running this command, you temporarily store your changes in a "box."
 
-‍‍```bash
+```bash
 git stash
 ```
 
