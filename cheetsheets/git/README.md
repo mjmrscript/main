@@ -5,7 +5,7 @@
 1. [Create Repository / ساخت مخزن](#create-repository)
 2. [Make a Change / ایجاد تغییر](#make-a-change)
 3. [Diff / تفاوت‌ها](#diff)
-4. [Merge & Rebase / ادغام و ریبیش](#merge--rebase)
+4. [Merge & Rebase / ادغام و ریبیس](#merge--rebase)
 5. [Configuration / تنظیمات](#configuration)
 6. [Log / تاریخچه](#log)
 7. [Working with Branches / کار با شاخه‌ها](#working-with-branches)
@@ -304,11 +304,11 @@ This file lists the files we don't want to push to GitHub.
 
 ### delete files
 
-‍‍‍‍‍‍```bash
+```bash
 git rm [file]
 ```
 
-## EXAMPLE
+# EXAMPLE
 
 ```bash
 mkdir main
