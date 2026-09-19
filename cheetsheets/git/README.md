@@ -84,6 +84,8 @@ git reset --hard <commit-hash>
 
 > If used after a commit, the commit is completely removed, and there is no way to revert the action.
 
+## Diff
+
 ### Diff before add
 
 **The content was initially 'A' and was committed. Now** 
@@ -115,6 +117,8 @@ git diff HEAD~1 HEAD
 > `git diff hash1 hash3`
 
 > `git diff HEAD~2 HEAD`
+
+## merge--rebase
 
 ### Merge with the commit
 
