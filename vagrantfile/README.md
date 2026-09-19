@@ -21,6 +21,10 @@ vagrant box add --provider virtualbox bento/ubuntu-22.04
 vagrant box add --provider virtualbox bento/debian-12
 ```
 # Some code for vagrant
+### Create vagrant
+```bash
+vagrant init
+```
 ### Turns on and prepares (boots) the virtual machine.
 ```bash
 vagrant up
