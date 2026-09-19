@@ -297,7 +297,9 @@ git stash list
 This file lists the files we don't want to push to GitHub.
 
 > like:
+
 >> *.log          #any file with .log Suffix
+
 >> !main.log 	  #except this file
 
 ### delete files
