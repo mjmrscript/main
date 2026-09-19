@@ -308,7 +308,7 @@ This file lists the files we don't want to push to GitHub.
 git rm [file]
 ```
 
-# EXAMPLE
+## EXAMPLE
 
 ```bash
 mkdir main
@@ -328,4 +328,4 @@ git commit -m "create README file and modified"
 git push -u origin [url]
 ```
 
-> *`for other time git push	`* 
+> *`for other time git push`* 
