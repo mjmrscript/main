@@ -2,9 +2,7 @@
 
 It involves the analysis and manipulation of tabular data.
 
-# 📑 Table of Contents
-
-## فهرست مطالب
+## 📑 Table of Contents
 
 1. [Introduction | مقدمه](#introduction)
 2. [Install pandas | نصب pandas](#install-pandas)
@@ -143,7 +141,7 @@ information numeric
 
 ```python
 print(df.describe())
-              سن
+#              age
 # count   3.000000
 # mean   25.666667
 # std     4.041452
@@ -289,12 +287,19 @@ print(df['name'].str.upper())
 > df['name'] → selects the 'name' column (a Series)
 
 > .upper() → ali : ALI
+
 >> .lower() → ALI : ali
+
 >> .title() →  ali reza : Ali Reza
+
 >> .len() → Ali : 3
+
 >> .contains('a') → True/False
+
 >> .replace('a', 'b') → Ali : bli
+
 >> .strip() → " Ali " → "Ali"
+
 >> .split(' ') → "Ali Reza" → ['Ali', 'Reza']
 
 ---
