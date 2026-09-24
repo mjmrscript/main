@@ -1,22 +1,56 @@
-# Numpy Cheat Sheet
+# Python Numpy Cheat Sheet
+
+A Python library for numerical computing and working with multidimensional arrays.
 
 ## 📑 Table of Contents
 
-1. [Import](#import)
-2. [Info | اطلاعات و مثال دستور](#info)
-3. [Reading and Writing Files | خواندن و نوشتن فایل‌ها](#reading-and-writing-files)
-4. [Create Array | ساخت آرایه](#create-array)
-5. [Properties and Inspection | ویژگی‌ها و بازرسی آرایه](#properties-and-inspection-methods)
-6. [Copying, Sorting, Transforming | کپی، مرتب‌سازی و تبدیل](#copying-sorting-and-transforming)
-7. [Adding/Removing/Combining/Splitting Elements | افزودن، حذف، ترکیب و تقسیم عناصر](#addingremovingcombiningsplitting-elements)
-8. [Vector Math | عملیات ریاضی برداری](#vector-math)
-9. [Scalar Math | عملیات ریاضی اسکالر](#scalar-math)
-10. [Statistics | آمار](#statistics)
+1. [Introduction | مقدمه](#introduction)
+2. [Install numpy | نصب کتابخانه numpy](#install-numpy)
+3. [Use Library | استفاده از کتابخانه](#use-library)
+4. [Info | اطلاعات و مثال دستور](#info)
+5. [Reading and Writing Files | خواندن و نوشتن فایل‌ها](#reading-and-writing-files)
+6. [Create Array | ساخت آرایه](#create-array)
+7. [Properties and Inspection | ویژگی‌ها و بازرسی آرایه](#properties-and-inspection-methods)
+8. [Copying, Sorting, Transforming | کپی، مرتب‌سازی و تبدیل](#copying-sorting-and-transforming)
+9. [Adding/Removing/Combining/Splitting Elements | افزودن، حذف، ترکیب و تقسیم عناصر](#addingremovingcombiningsplitting-elements)
+10. [Vector Math | عملیات ریاضی برداری](#vector-math)
+11. [Scalar Math | عملیات ریاضی اسکالر](#scalar-math)
+12. [Statistics | آمار](#statistics)
 
 ---
 ---
 
-## import
+## introduction
+
+```python
+#Checking if Python is installed
+python3 --version
+
+#Checking if pip is installed
+python3 -m pip --version
+
+#if not installed
+sudo apt install python3-pip
+
+#create project
+mkdir myproject
+cd myproject
+python3 -m venv .venv
+source .venv/bin/activate
+``` 
+
+---
+
+## install numpy
+
+```python
+#without venv
+python -m pip install numpy
+#with venv
+pip install numpy
+```
+
+## use-library
 
 You’ll also need to import numpy to get started
 
