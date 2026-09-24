@@ -1,6 +1,6 @@
 # Numpy Cheat Sheet
 
-## 📑 فهرست مطالب | Table of Contents
+## 📑 Table of Contents
 
 1. [Import](#import)
 2. [Info | اطلاعات و مثال دستور](#info)
