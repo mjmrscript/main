@@ -1,4 +1,4 @@
-# Python Numpy Cheat Sheet
+# Python matplotlib Cheat Sheet
 
 Matplotlib is a Python library for creating static, animated, and visualized charts from data.
 
@@ -268,7 +268,7 @@ plt.show()
 
 ```python
 data = [np.random.randn(100) * s for s in (1, 2, 3)]
-plt.boxplot(data, labels=["G1", "G2", "G3"])
+plt.boxplot(data, tick_labels=["G1", "G2", "G3"])
 plt.show()
 ```
 
@@ -393,12 +393,12 @@ ax1.tick_params(axis="y", colors="b")
 ax2 = ax1.twinx()
 ax2.plot(x, np.exp(x/5), "r")
 ax2.set_ylabel("pressure", color="r")
-ax2.tick_params(axis="y", colors="r")```
+ax2.tick_params(axis="y", colors="r")
+```
 
 ### result
 
 ![Figure 15](./picture/Figure_15.png)
-
 
 ---
 
@@ -453,7 +453,7 @@ fig.savefig("chart.png", transparent=True)
 
 ---
 
-## work wirh pandas
+## work with pandas
 
 ```python
 import pandas as pd
@@ -511,8 +511,9 @@ def update(frame):
 
 ani = FuncAnimation(fig, update, frames=100, interval=30, blit=True)
 plt.show()
-# ani.save("wave.gif", writer="pillow")
 ```
+
+> for save this `ani.save("wave.gif", writer="pillow")`
 
 ### result
 
