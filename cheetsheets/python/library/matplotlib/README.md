@@ -514,7 +514,7 @@ plt.show()
 # ani.save("wave.gif", writer="pillow")
 ```
 
-# result
+### result
 
 ![Figure 19](./picture/wave.gif)
 
