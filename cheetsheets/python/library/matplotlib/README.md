@@ -2,6 +2,38 @@
 
 Matplotlib is a Python library for creating static, animated, and visualized charts from data.
 
+
+## 📑 Table of Contents
+
+1. [Introduction | مقدمه](#introduction)
+2. [Install Matplotlib | نصب matplotlib](#install-matplotlib)
+3. [Use library | نحوه استفاده](#use-library)
+4. [Easy Plot | نمودار ساده](#easy-plot)
+5. [Label | برچسب‌گذاری](#label)
+6. [Customize the Font | سفارشی‌سازی فونت](#customize-the-font)
+7. [Multiple Lines in One Plot | چند خط در یک نمودار](#multiple-line-in-one-plot)
+8. [Professional Approach | روش حرفه‌ای](#professional-approach)
+9. [Multiple Charts in a Single Image | چند نمودار در یک تصویر](#multiple-charts-in-a-single-image)
+10. [Types of Plots | انواع نمودارها](#types-of-plots)
+11. [Bar Type | نمودار میله‌ای](#bar-type)
+12. [Scatter Type | نمودار پراکندگی](#scatter-type)
+13. [Histogram | هیستوگرام](#histogram)
+14. [Pie Type | نمودار دایره‌ای](#pie-type)
+15. [Box Plot | نمودار جعبه‌ای](#box-plot)
+16. [Fill Between | پر کردن بین دو منحنی](#fill-between)
+17. [Heatmap | نقشه حرارتی](#heatmap)
+18. [Error Bar | نوار خطا](#error-bar)
+19. [Text, Flash, and Annotations | متن و حاشیه‌نویسی](#text-flash-and-annotations)
+20. [Auxiliary Lines | خطوط کمکی](#auxiliary-lines)
+21. [Two Y-Axes | دو محور Y](#two-y-axes)
+22. [Colors | رنگ‌ها](#colors)
+23. [Save Plot | ذخیره نمودار](#save-plot)
+24. [Work with Pandas | کار با Pandas](#work-with-pandas)
+25. [3D Plot | نمودار سه‌بعدی](#3d-plot)
+26. [Animation | انیمیشن](#animation)
+
+---
+
 ## introduction
 
 ```python
